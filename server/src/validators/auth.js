@@ -23,6 +23,16 @@ const emailExists = check("email").custom(async (value) => {
   }
 });
 
+const EmailDoesNotExist = check("email").custom(async (value) => {
+  const { rows } = await db.query("SELECT * from trainer WHERE email = $1", [
+    value,
+  ]);
+
+  if (!rows.length) {
+    throw new Error("Email does not exist.");
+  }
+});
+
 //login validation
 const loginFieldsCheck = check("email").custom(async (value, { req }) => {
   const user = await db.query("SELECT * from trainer WHERE email = $1", [
@@ -45,4 +55,5 @@ const loginFieldsCheck = check("email").custom(async (value, { req }) => {
 module.exports = {
   registerValidation: [email, password, emailExists],
   loginValidation: [loginFieldsCheck],
+  forgotpasswordvalidation: [EmailDoesNotExist],
 };

@@ -95,3 +95,18 @@ exports.logout = async (req, res) => {
     });
   }
 };
+
+exports.forgotpassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    return res.status(200).clearCookie("token", { httpOnly: true }).json({
+      success: true,
+      message: "Logged out succefully",
+    });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+};

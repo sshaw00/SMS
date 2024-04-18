@@ -7,8 +7,13 @@ const {
   protected,
   logout,
   random,
+  forgotpassword,
 } = require("../controllers/auth");
-const { registerValidation, loginValidation } = require("../validators/auth");
+const {
+  registerValidation,
+  loginValidation,
+  forgotpasswordvalidation,
+} = require("../validators/auth");
 const {
   validationMiddleware,
 } = require("../middlewares/validations-middleware.js");
@@ -20,4 +25,5 @@ router.post("/register", registerValidation, validationMiddleware, register);
 router.post("/login", loginValidation, validationMiddleware, login);
 router.get("/logout", logout);
 router.get("/random", random);
+router.get("/forgotpassword", forgotpasswordvalidation, forgotpassword);
 module.exports = router;

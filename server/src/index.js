@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const { PORT, CLIENT_URL } = require("./constants");
+const { PORT, CLIENT_URL, SERVER_URL } = require("./constants");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const passport = require("passport");
@@ -13,11 +13,12 @@ const buildPath = path.join(__dirname, "../../client/build");
 app.use(express.json());
 app.use(express.static(buildPath));
 
-// app.use(
-//   cors({
-//     origin: "*",
-//   })
-// );
+app.use(
+  cors({
+    origin: CLIENT_URL,
+    credentials: true,
+  })
+);
 
 app.get("/*", function (re1, res) {
   res.sendFile(
