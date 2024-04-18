@@ -5,8 +5,6 @@ import "./login.css";
 const Home = () => {
   return (
     <Layout>
-      <img src={logo} className="img2" />
-
       <h1></h1>
     </Layout>
   );
