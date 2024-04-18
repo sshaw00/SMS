@@ -8,6 +8,12 @@ export async function onRegistration(registrationData) {
     registrationData
   );
 }
+export async function onForgotPassword(registrationData) {
+  return await axios.post(
+    "http://localhost:8000/api/forgotpassword",
+    registrationData
+  );
+}
 
 export async function onLogin(loginData) {
   return await axios.post("http://localhost:8000/api/login", loginData);
