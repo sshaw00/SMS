@@ -8,6 +8,7 @@ const {
   logout,
   random,
   forgotpassword,
+  resetpassword,
 } = require("../controllers/auth");
 const {
   registerValidation,
@@ -25,5 +26,12 @@ router.post("/register", registerValidation, validationMiddleware, register);
 router.post("/login", loginValidation, validationMiddleware, login);
 router.get("/logout", logout);
 router.get("/random", random);
-router.get("/forgotpassword", forgotpasswordvalidation, forgotpassword);
+router.post(
+  "/forgotpassword",
+  forgotpasswordvalidation,
+  validationMiddleware,
+  forgotpassword
+);
+router.post("/resetpassword/:id/:token", resetpassword);
+
 module.exports = router;

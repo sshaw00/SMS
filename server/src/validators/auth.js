@@ -29,7 +29,10 @@ const EmailDoesNotExist = check("email").custom(async (value) => {
   ]);
 
   if (!rows.length) {
+    console.log("Email does not exist.");
     throw new Error("Email does not exist.");
+  } else {
+    console.log("Email Exists");
   }
 });
 
@@ -55,5 +58,5 @@ const loginFieldsCheck = check("email").custom(async (value, { req }) => {
 module.exports = {
   registerValidation: [email, password, emailExists],
   loginValidation: [loginFieldsCheck],
-  forgotpasswordvalidation: [EmailDoesNotExist],
+  forgotpasswordvalidation: [email, EmailDoesNotExist],
 };
