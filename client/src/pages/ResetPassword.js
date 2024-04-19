@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { onForgotPassword } from "../api/auth";
 import Layout from "../components/layout";
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../redux/slices/authSlice";
@@ -7,14 +6,17 @@ import { FaUser, FaLock } from "react-icons/fa";
 import "./login.css";
 import logo from "../components/img/IMG_20240219_090620519_HDR.jpg";
 import Button from "@mui/material/Button";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const [values, setValues] = useState({
-    email: "",
+    password: "",
   });
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+  const { id, token } = useParams();
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -23,16 +25,14 @@ const ForgotPassword = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const { data } = await onForgotPassword(values);
-
-      setError("");
-      setSuccess(data.message);
-      setValues({ email: "" });
-    } catch (error) {
-      setError(error.response.data.errors[0].msg);
-      setSuccess("");
-    }
+    axios
+      .post(`http://localhost:8000/api/resetpassword/${id}/${token}`, values)
+      .then((res) => {
+        if (res.data.Status === "Success") {
+          navigate("/login");
+        }
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <Layout>
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
         <form onSubmit={(e) => onSubmit(e)} className="container mt-3">
           <center>
             {" "}
-            <h2>Forgot Password</h2>
+            <h2>Reset Password</h2>
           </center>
 
           <div className=" input-box">
@@ -49,14 +49,14 @@ const ForgotPassword = () => {
             </label> */}
             <input
               onChange={(e) => onChange(e)}
-              type="email"
-              id="email"
-              name="email"
-              value={values.email}
-              placeholder="Email ID"
+              type="password"
+              id="password"
+              name="password"
+              value={values.password}
+              placeholder="New Password"
               required
             />
-            <FaUser className="icon" />
+            <FaLock className="icon" />
           </div>
 
           <div className="error" style={{ color: "red", margin: "0px 20px" }}>
@@ -70,7 +70,7 @@ const ForgotPassword = () => {
           </div>
 
           <button type="submit" className="regbutton">
-            Submit
+            Update
           </button>
         </form>
       </div>
@@ -78,4 +78,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;

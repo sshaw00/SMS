@@ -10,6 +10,7 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import { useSelector } from "react-redux";
 
 const PrivateRoutes = () => {
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
+          <Route path="/resetpassword/:id/:token" element={<ResetPassword />} />
         </Route>
       </Routes>
     </BrowserRouter>

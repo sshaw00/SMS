@@ -1,4 +1,6 @@
 import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useState } from "react";
 // const { SERVER_URL } = require("../constants/index");
 axios.defaults.withCredentials = true;
 
@@ -8,10 +10,10 @@ export async function onRegistration(registrationData) {
     registrationData
   );
 }
-export async function onForgotPassword(registrationData) {
+export async function onForgotPassword(forgotdata) {
   return await axios.post(
     "http://localhost:8000/api/forgotpassword",
-    registrationData
+    forgotdata
   );
 }
 
