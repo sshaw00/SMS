@@ -13,6 +13,8 @@ const buildPath = path.join(__dirname, "../../client/build");
 app.use(express.json());
 app.use(express.static(buildPath));
 
+//kuch bhi likho
+
 app.use(
   cors({
     origin: CLIENT_URL,
