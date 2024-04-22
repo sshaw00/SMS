@@ -1,7 +1,7 @@
 const db = require("../db");
 const { hash } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
-const { SECRET } = require("../constants");
+const { SECRET, CLIENT_URL } = require("../constants");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -123,7 +123,7 @@ exports.forgotpassword = async (req, res) => {
       from: "swarupps66@gmail.com",
       to: `${email}`,
       subject: "Reset AbhaPortal Password",
-      html: `<h2>Link to Reset Password</h2><p>http://localhost:3000/resetpassword/${user.rows[0].trainer_id}/${token}</p>`,
+      html: `<h2>Link to Reset Password</h2><p>${CLIENT_URL}/resetpassword/${user.rows[0].trainer_id}/${token}</p>`,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -157,6 +157,7 @@ exports.resetpassword = async (req, res) => {
 
   jwt.verify(token, SECRET, (err, decoded) => {
     if (err) {
+      alert("Error With Token");
       return res.status(500).json({
         error: "Error with Token",
       });
