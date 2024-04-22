@@ -5,8 +5,9 @@ import { useState } from "react";
 axios.defaults.withCredentials = true;
 
 export async function onRegistration(registrationData) {
+  // console.log(SERVER_URL);
   return await axios.post(
-    "http://localhost:8000/api/register",
+    `http://localhost:8000/api/register`,
     registrationData
   );
 }

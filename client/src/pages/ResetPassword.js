@@ -25,14 +25,20 @@ const ResetPassword = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    axios
-      .post(`http://localhost:8000/api/resetpassword/${id}/${token}`, values)
-      .then((res) => {
-        if (res.data.Status === "Success") {
-          navigate("/login");
-        }
-      })
-      .catch((err) => console.log(err));
+    try {
+      const { data } = await axios.post(
+        `http://localhost:8000/api/resetpassword/${id}/${token}`,
+        values
+      );
+
+      if (data.success) {
+        alert("Password Changed Successfully");
+        navigate("/login");
+      }
+    } catch (error) {
+      setError(error.response.data.errors[0].msg);
+      setSuccess("");
+    }
   };
   return (
     <Layout>

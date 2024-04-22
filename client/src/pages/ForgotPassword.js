@@ -22,10 +22,9 @@ const ForgotPassword = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const { data } = await onForgotPassword(values);
 
     try {
-      const { data } = await onForgotPassword(values);
-
       setError("");
       setSuccess(data.message);
       setValues({ email: "" });
